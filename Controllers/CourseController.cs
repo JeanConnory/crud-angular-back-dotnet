@@ -21,5 +21,16 @@ namespace crud_dotnet.Controllers
         {
             return await _courseRepository.GetCoursesAsync();
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] Course course)
+        {
+            if (course == null)
+                return BadRequest("Invalid data");
+
+            await _courseRepository.CreateAsync(course);
+
+            return Ok(StatusCodes.Status201Created);
+        }
     }
 }
