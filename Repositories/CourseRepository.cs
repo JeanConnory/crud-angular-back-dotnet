@@ -15,6 +15,13 @@ public class CourseRepository : ICourseRepository
 
     public async Task<IEnumerable<Course>> GetCoursesAsync()
     {
-       return await _appDbContext.Courses.ToListAsync();
+        return await _appDbContext.Courses.ToListAsync();
     }
+
+    public async Task<Course> CreateAsync(Course course)
+    {
+        _appDbContext.Add(course);
+        await _appDbContext.SaveChangesAsync();
+        return course;
+    }    
 }
