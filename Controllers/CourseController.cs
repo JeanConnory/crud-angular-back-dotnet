@@ -22,6 +22,12 @@ namespace crud_dotnet.Controllers
             return await _courseRepository.GetCoursesAsync();
         }
 
+        [HttpGet("{id}")]
+        public async Task<Course> GetById(long id)
+        {
+            return await _courseRepository.FindByIdAsync(id);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Course course)
         {
@@ -31,6 +37,19 @@ namespace crud_dotnet.Controllers
             await _courseRepository.CreateAsync(course);
 
             return Ok(StatusCodes.Status201Created);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(long id, [FromBody] Course course)
+        {
+            if (id != course.Id)
+                return BadRequest();
+
+            if (course == null)
+                return BadRequest("Invalid data");
+
+            await _courseRepository.UpdateAsync(course);
+            return Ok(course);
         }
     }
 }

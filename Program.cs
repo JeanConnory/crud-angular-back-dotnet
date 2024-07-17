@@ -10,7 +10,8 @@ builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("Teste"));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

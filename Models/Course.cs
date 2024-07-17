@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace crud_dotnet.Models;
@@ -6,8 +7,9 @@ namespace crud_dotnet.Models;
 public class Course
 {
     [Key]
-    [JsonPropertyName("_id")]
-    public long Id { get; set; }
+    //[JsonPropertyName("_id")]
+    [JsonProperty(PropertyName = "_id")]
+    public long? Id { get; set; }
 
     [Required]
     [StringLength(200)]

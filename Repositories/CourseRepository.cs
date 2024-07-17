@@ -18,10 +18,22 @@ public class CourseRepository : ICourseRepository
         return await _appDbContext.Courses.ToListAsync();
     }
 
+    public async Task<Course> FindByIdAsync(long id)
+    {
+        return await _appDbContext.Courses.FindAsync(id);
+    }
+
     public async Task<Course> CreateAsync(Course course)
     {
         _appDbContext.Add(course);
         await _appDbContext.SaveChangesAsync();
         return course;
-    }    
+    }
+
+    public async Task<Course> UpdateAsync(Course course)
+    {
+        _appDbContext.Update(course);
+        await _appDbContext.SaveChangesAsync();
+        return course;
+    }
 }
