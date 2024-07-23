@@ -1,6 +1,7 @@
 ﻿using crud_dotnet.Data;
 using crud_dotnet.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace crud_dotnet.Repositories;
 
@@ -15,12 +16,16 @@ public class CourseRepository : ICourseRepository
 
     public async Task<IEnumerable<Course>> GetCoursesAsync()
     {
-        return await _appDbContext.Courses.ToListAsync();
+        return await _appDbContext.Courses
+                                    .Where(c => c.Status == "Ativo")
+                                    .ToListAsync();
     }
 
     public async Task<Course> FindByIdAsync(long id)
     {
-        return await _appDbContext.Courses.FindAsync(id);
+        return await _appDbContext.Courses
+                                    .Where (c => c.Id == id && c.Status == "Ativo")
+                                    .FirstOrDefaultAsync();
     }
 
     public async Task<Course> CreateAsync(Course course)
@@ -33,6 +38,14 @@ public class CourseRepository : ICourseRepository
     public async Task<Course> UpdateAsync(Course course)
     {
         _appDbContext.Update(course);
+        await _appDbContext.SaveChangesAsync();
+        return course;
+    }
+
+    public async Task<Course> DeleteAsync(long id)
+    {
+        Course course = await _appDbContext.Courses.FindAsync(id);
+        _appDbContext.Remove(course);
         await _appDbContext.SaveChangesAsync();
         return course;
     }

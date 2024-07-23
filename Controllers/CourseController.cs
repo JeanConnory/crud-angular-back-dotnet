@@ -51,5 +51,20 @@ namespace crud_dotnet.Controllers
             await _courseRepository.UpdateAsync(course);
             return Ok(course);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(long id)
+        {
+            var course = await _courseRepository.FindByIdAsync(id);
+
+            if (course == null)
+                return NotFound("Course not found");
+
+            course.Status = "Inativo";
+
+            await _courseRepository.UpdateAsync(course);
+
+            return NoContent();
+        }
     }
 }

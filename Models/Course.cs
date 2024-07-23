@@ -12,10 +12,14 @@ public class Course
     public long? Id { get; set; }
 
     [Required]
-    [StringLength(200)]
+    [StringLength(100)]
     public string Name { get; set; } = string.Empty;
 
     [Required]
-    [StringLength(200)]
+    [StringLength(10)]
     public string Category { get; set; } = string.Empty;
+
+    [Required]
+    [StringLength(10)]
+    public string Status { get; set; } = "Ativo";
 }
