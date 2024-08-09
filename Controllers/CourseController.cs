@@ -1,4 +1,5 @@
-﻿using crud_dotnet.Models;
+﻿using crud_dotnet.DTO;
+using crud_dotnet.Models;
 using crud_dotnet.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,30 +18,30 @@ namespace crud_dotnet.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Course>> List()
+        public async Task<IEnumerable<CourseDTO>> List()
         {
             return await _courseRepository.GetCoursesAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<Course> GetById(long id)
+        public async Task<CourseDTO> GetById(long id)
         {
             return await _courseRepository.FindByIdAsync(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Course course)
+        public async Task<ActionResult> Post([FromBody] CourseDTO course)
         {
             if (course == null)
                 return BadRequest("Invalid data");
 
             await _courseRepository.CreateAsync(course);
 
-            return Ok(StatusCodes.Status201Created);
+            return Ok(course);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(long id, [FromBody] Course course)
+        public async Task<ActionResult> Put(long id, [FromBody] CourseDTO course)
         {
             if (id != course.Id)
                 return BadRequest();
@@ -60,9 +61,9 @@ namespace crud_dotnet.Controllers
             if (course == null)
                 return NotFound("Course not found");
 
-            course.Status = "Inativo";
+            //course.Status = "Inativo";
 
-            await _courseRepository.UpdateAsync(course);
+            await _courseRepository.DeleteAsync(id);
 
             return NoContent();
         }
