@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using crud_dotnet.Enums;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace crud_dotnet.Models;
 
@@ -17,9 +19,11 @@ public class Course
 
     [Required]
     [StringLength(10)]
-    public string Category { get; set; } = string.Empty;
+    public Category Category { get; set; }
 
     [Required]
     [StringLength(10)]
-    public string Status { get; set; } = "Ativo";
+    public Status Status { get; set; }
+
+    public List<Lesson> Lessons { get; set; } = new List<Lesson>();
 }

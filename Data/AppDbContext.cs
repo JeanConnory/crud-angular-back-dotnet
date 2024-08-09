@@ -11,7 +11,32 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Lesson>().HasData
+         (
+             new Lesson
+             {
+                 Id = 1,
+                 Name = "Teste",
+                 YoutubeUrl = "teste.html",
+                 CourseId = 1
+             },
+             new Lesson
+             {
+                 Id = 2,
+                 Name = "Teste 2",
+                 YoutubeUrl = "teste2.html",
+                 CourseId = 1
+             },
+             new Lesson
+             {
+                 Id = 3,
+                 Name = "Teste 3",
+                 YoutubeUrl = "teste3.html",
+                 CourseId = 2
+             }
+         );
 
         modelBuilder.Entity<Course>().HasData
             (
@@ -19,104 +44,58 @@ public class AppDbContext : DbContext
                 {
                     Id = 1,
                     Name = "Angular",
-                    Category = "Front-End"
+                    Category = Enums.Category.FRONTEND                    
                 },
                 new Course
                 {
                     Id = 2,
                     Name = "React",
-                    Category = "Front-End"
+                    Category = Enums.Category.FRONTEND
                 },
                 new Course
                 {
                     Id = 3,
                     Name = "VueJS",
-                    Category = "Front-End"
+                    Category = Enums.Category.FRONTEND
                 },
                 new Course
                 {
                     Id = 4,
-                    Name = "NextJS",
-                    Category = "Front-End"
+                    Name = "Blazor",
+                    Category = Enums.Category.FRONTEND
                 },
                 new Course
                 {
                     Id = 5,
-                    Name = "Blazor",
-                    Category = "Front-End"
+                    Name = "Java",
+                    Category = Enums.Category.BACKEND
                 },
                 new Course
                 {
                     Id = 6,
-                    Name = "Java",
-                    Category = "Back-End"
+                    Name = "DotNet",
+                    Category = Enums.Category.BACKEND
                 },
                 new Course
                 {
                     Id = 7,
-                    Name = "DotNet",
-                    Category = "Back-End"
+                    Name = "React Native",
+                    Category = Enums.Category.MOBILE
                 },
                 new Course
                 {
                     Id = 8,
-                    Name = "PHP",
-                    Category = "Back-End"
+                    Name = "Flutter",
+                    Category = Enums.Category.MOBILE
                 },
                 new Course
                 {
                     Id = 9,
-                    Name = "Ruby",
-                    Category = "Back-End"
-                },
-                new Course
-                {
-                    Id = 10,
-                    Name = "Python",
-                    Category = "Back-End"
-                },
-                new Course
-                {
-                    Id = 11,
-                    Name = "NodeJS",
-                    Category = "Back-End"
-                },
-                new Course
-                {
-                    Id = 12,
-                    Name = "NestJS",
-                    Category = "Back-End"
-                },
-                new Course
-                {
-                    Id = 13,
-                    Name = "Kotlin",
-                    Category = "Mobile"
-                },
-                new Course
-                {
-                    Id = 14,
-                    Name = "Swift",
-                    Category = "Mobile"
-                },
-                new Course
-                {
-                    Id = 15,
-                    Name = "React Native",
-                    Category = "Mobile"
-                },
-                new Course
-                {
-                    Id = 16,
-                    Name = "Flutter",
-                    Category = "Mobile"
-                },
-                new Course
-                {
-                    Id = 17,
                     Name = "DotNet MAUI",
-                    Category = "Mobile"
+                    Category = Enums.Category.MOBILE
                 }
             );
+
+       
     }
 }

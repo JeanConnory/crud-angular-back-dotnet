@@ -1,16 +1,17 @@
-﻿using crud_dotnet.Models;
+﻿using crud_dotnet.DTO;
+using crud_dotnet.Models;
 
 namespace crud_dotnet.Repositories;
 
 public interface ICourseRepository
 {
-    Task<IEnumerable<Course>> GetCoursesAsync();
+    Task<IEnumerable<CourseDTO>> GetCoursesAsync();
 
-    Task<Course> FindByIdAsync(long id);
+    Task<CourseDTO> FindByIdAsync(long id);
 
-    Task<Course> CreateAsync(Course course);
+    Task<CourseDTO> CreateAsync(CourseDTO course);
 
-    Task<Course> UpdateAsync(Course course);
+    Task<CourseDTO> UpdateAsync(CourseDTO course);
 
-    Task<Course> DeleteAsync(long id);
+    Task<CourseDTO> DeleteAsync(long id);
 }
