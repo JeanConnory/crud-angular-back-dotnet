@@ -25,5 +25,5 @@ public class Course
     [StringLength(10)]
     public Status Status { get; set; }
 
-    public List<Lesson> Lessons { get; set; } = new List<Lesson>();
+    public List<Lesson> Lessons { get; set; }
 }

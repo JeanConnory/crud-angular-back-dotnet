@@ -8,35 +8,37 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<Course> Courses { get; set; }
+    
+    public DbSet<Lesson> Lessons { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Lesson>().HasData
-         (
-             new Lesson
-             {
-                 Id = 1,
-                 Name = "Teste",
-                 YoutubeUrl = "teste.html",
-                 CourseId = 1
-             },
-             new Lesson
-             {
-                 Id = 2,
-                 Name = "Teste 2",
-                 YoutubeUrl = "teste2.html",
-                 CourseId = 1
-             },
-             new Lesson
-             {
-                 Id = 3,
-                 Name = "Teste 3",
-                 YoutubeUrl = "teste3.html",
-                 CourseId = 2
-             }
-         );
+        //modelBuilder.Entity<Lesson>().HasData
+        // (
+        //     new Lesson
+        //     {
+        //         Id = 1,
+        //         Name = "Teste",
+        //         YoutubeUrl = "teste.html",
+        //         CourseId = 1
+        //     },
+        //     new Lesson
+        //     {
+        //         Id = 2,
+        //         Name = "Teste 2",
+        //         YoutubeUrl = "teste2.html",
+        //         CourseId = 1
+        //     },
+        //     new Lesson
+        //     {
+        //         Id = 3,
+        //         Name = "Teste 3",
+        //         YoutubeUrl = "teste3.html",
+        //         CourseId = 2
+        //     }
+        // );
 
         modelBuilder.Entity<Course>().HasData
             (

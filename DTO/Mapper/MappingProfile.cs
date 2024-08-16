@@ -7,7 +7,10 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Course, CourseDTO>().ReverseMap();
+        CreateMap<Course, CourseDTO>()
+            .ForMember(dest => dest.Lessons, opt => opt.MapFrom(src => src.Lessons))
+            .ReverseMap();
+
         CreateMap<Lesson, LessonDTO>().ReverseMap();
     }
 }

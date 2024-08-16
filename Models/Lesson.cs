@@ -7,7 +7,7 @@ namespace crud_dotnet.Models;
 public class Lesson
 {
     [Key]
-    public long Id { get; set; }
+    public long? Id { get; set; }
 
     [Required]
     [StringLength(100)]
@@ -19,5 +19,5 @@ public class Lesson
 
     //[ForeignKey("Course")]
     public long CourseId { get; set; }    
-    //public virtual Course Course { get; set; }
+    public Course Course { get; set; }
 }

@@ -1,10 +1,20 @@
-﻿namespace crud_dotnet.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace crud_dotnet.DTO
 {
-    public record LessonDTO(
-        long Id,
-        string Name,
-        string youtubeUrl
-        )
+    public class LessonDTO
     {
+        public long? Id { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        [Required]
+        [StringLength(11)]
+        public string YoutubeUrl { get; set; }
+
+        //[ForeignKey("Course")]
+        public long CourseId { get; set; }
     }
 }

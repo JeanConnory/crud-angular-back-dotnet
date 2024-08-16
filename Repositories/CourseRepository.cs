@@ -17,20 +17,20 @@ public class CourseRepository : ICourseRepository
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<CourseDTO>> GetCoursesAsync()
-    {
-        var courses = await _appDbContext.Courses
-                                    .Where(c => c.Status == Enums.Status.ATIVO)
-                                    .Include(l => l.Lessons)
-                                    .ToListAsync();
+    //public async Task<IEnumerable<CourseDTO>> GetCoursesAsync()
+    //{
+    //    var courses = await _appDbContext.Courses
+    //                                .Where(c => c.Status == Enums.Status.ATIVO)
+    //                                .Include(l => l.Lessons)
+    //                                .ToListAsync();
 
-        return _mapper.Map<IEnumerable<CourseDTO>>(courses);
-    }
+    //    return _mapper.Map<IEnumerable<CourseDTO>>(courses);
+    //}
 
     public async Task<CourseDTO> FindByIdAsync(long id)
     {
         var course = await _appDbContext.Courses
-                                    .Where (c => c.Id == id && c.Status == Enums.Status.ATIVO)
+                                    .Where(c => c.Id == id && c.Status == Enums.Status.ATIVO)
                                     .Include(l => l.Lessons)
                                     .FirstOrDefaultAsync();
 
@@ -45,9 +45,14 @@ public class CourseRepository : ICourseRepository
         return _mapper.Map<CourseDTO>(course);
     }
 
-    public async Task<CourseDTO> UpdateAsync(CourseDTO courseDTO)
+    public async Task<CourseDTO> UpdateAsync(long id, CourseDTO courseDTO)
     {
-        var course = _mapper.Map<Course>(courseDTO);
+        Course course = await _appDbContext.Courses
+            .Include(l => l.Lessons)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.Id == id);
+        course.Lessons.Clear();
+        course = _mapper.Map<Course>(courseDTO);
         _appDbContext.Update(course);
         await _appDbContext.SaveChangesAsync();
         return _mapper.Map<CourseDTO>(course);
@@ -59,5 +64,20 @@ public class CourseRepository : ICourseRepository
         _appDbContext.Remove(course);
         await _appDbContext.SaveChangesAsync();
         return _mapper.Map<CourseDTO>(course);
+    }
+
+    public async Task<PaginatedList<CourseDTO>> GetCoursesAsync(int pageIndex, int pageSize)
+    {
+        var courses = await _appDbContext.Courses            
+            .Skip(pageIndex * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        var coursesDTO = _mapper.Map<List<CourseDTO>>(courses);
+
+        var totalElements = await _appDbContext.Courses.CountAsync();
+        var totalPages = (int)Math.Ceiling(totalElements / (double)pageSize);
+
+        return new PaginatedList<CourseDTO>(coursesDTO, pageIndex, totalPages, totalElements);
     }
 }

@@ -18,10 +18,17 @@ namespace crud_dotnet.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CourseDTO>> List()
+        public async Task<PaginatedList<CourseDTO>> List(int pageIndex = 1, int pageSize = 5)
         {
-            return await _courseRepository.GetCoursesAsync();
+            return await _courseRepository.GetCoursesAsync(pageIndex, pageSize);
         }
+
+        //[HttpGet("ListPaginated")]
+        //public async Task<PaginatedList<CourseDTO>> ListPaginated(int pageIndex = 1, int pagesize = 10)
+        //{
+        //    var courses = await _courseRepository.GetCoursesPaginatedAsync(pageIndex, pagesize);
+        //    return courses;
+        //}
 
         [HttpGet("{id}")]
         public async Task<CourseDTO> GetById(long id)
@@ -49,7 +56,7 @@ namespace crud_dotnet.Controllers
             if (course == null)
                 return BadRequest("Invalid data");
 
-            await _courseRepository.UpdateAsync(course);
+            await _courseRepository.UpdateAsync(id, course);
             return Ok(course);
         }
 
